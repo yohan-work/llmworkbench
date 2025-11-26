@@ -9,7 +9,7 @@ import { Lightbulb, Trophy } from "lucide-react";
 
 export default function ComparisonSection() {
   const [activeCategory, setActiveCategory] =
-    useState<ResponseCategory>("coding");
+    useState<ResponseCategory>("layout");
   const [activeExampleIndex, setActiveExampleIndex] = useState(0);
 
   const filteredExamples = responseExamples.filter(

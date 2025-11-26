@@ -1,10 +1,11 @@
 import type { CategoryInfo, ResponseCategory } from '../../types';
 import {
-  Code,
-  Brain,
-  Sparkles,
-  FileText,
-  MessageCircle,
+  Layout,
+  Palette,
+  MousePointerClick,
+  Accessibility,
+  Wrench,
+  Code, // fallback
 } from 'lucide-react';
 
 interface CategoryTabsProps {
@@ -14,11 +15,11 @@ interface CategoryTabsProps {
 }
 
 const iconMap: Record<string, React.ElementType> = {
-  Code,
-  Brain,
-  Sparkles,
-  FileText,
-  MessageCircle,
+  Layout,
+  Palette,
+  MousePointerClick,
+  Accessibility,
+  Wrench,
 };
 
 export default function CategoryTabs({

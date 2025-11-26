@@ -31,6 +31,13 @@ export interface RadarDataPoint {
 }
 
 // 응답 비교 타입
+export type ResponseCategory = 
+  | 'layout'        // 레이아웃/구조
+  | 'styling'       // 스타일링/CSS
+  | 'interaction'   // 인터랙션/JS
+  | 'accessibility' // 접근성/웹표준
+  | 'troubleshooting'; // 디버깅/문제해결
+
 export interface ResponseExample {
   id: string;
   category: ResponseCategory;
@@ -46,13 +53,6 @@ export interface ResponseExample {
   analysis: string;
   recommendedModel: string;
 }
-
-export type ResponseCategory = 
-  | 'coding'
-  | 'reasoning'
-  | 'creative'
-  | 'analysis'
-  | 'conversation';
 
 export interface CategoryInfo {
   id: ResponseCategory;
@@ -102,4 +102,3 @@ export interface APIConfig {
   apiKey: string;
   endpoint?: string;
 }
-

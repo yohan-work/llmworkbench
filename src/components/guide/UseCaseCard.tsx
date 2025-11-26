@@ -1,11 +1,12 @@
 import type { UseCase } from '../../types';
 import {
   Code,
-  FlaskConical,
-  PenTool,
-  BarChart3,
-  Briefcase,
-  GraduationCap,
+  Layout,
+  Smartphone,
+  Wrench,
+  MousePointerClick,
+  Accessibility,
+  Zap,
 } from 'lucide-react';
 
 interface UseCaseCardProps {
@@ -15,12 +16,12 @@ interface UseCaseCardProps {
 }
 
 const iconMap: Record<string, React.ElementType> = {
-  Code,
-  FlaskConical,
-  PenTool,
-  BarChart3,
-  Briefcase,
-  GraduationCap,
+  Layout,
+  Smartphone,
+  Wrench,
+  MousePointerClick,
+  Accessibility,
+  Zap,
 };
 
 export default function UseCaseCard({

@@ -2,696 +2,410 @@ import type { ResponseExample, CategoryInfo } from '../types';
 
 export const categories: CategoryInfo[] = [
   {
-    id: 'coding',
-    name: 'Coding',
-    nameKo: '코딩',
-    icon: 'Code',
-    description: '프로그래밍 문제 해결, 코드 작성 및 디버깅',
+    id: 'layout',
+    name: 'Layout & Structure',
+    nameKo: '레이아웃/구조',
+    icon: 'Layout',
+    description: 'HTML 구조 설계 및 CSS 레이아웃(Flex/Grid) 구현',
   },
   {
-    id: 'reasoning',
-    name: 'Reasoning',
-    nameKo: '논리 추론',
-    icon: 'Brain',
-    description: '복잡한 논리 문제 해결 및 분석적 사고',
+    id: 'styling',
+    name: 'Styling & Design',
+    nameKo: '스타일링/디자인',
+    icon: 'Palette',
+    description: '매력적인 UI 디자인 및 CSS 애니메이션 효과',
   },
   {
-    id: 'creative',
-    name: 'Creative Writing',
-    nameKo: '창의적 글쓰기',
-    icon: 'Sparkles',
-    description: '스토리텔링, 시, 창의적 콘텐츠 생성',
+    id: 'interaction',
+    name: 'Interaction',
+    nameKo: '인터랙션(JS)',
+    icon: 'MousePointerClick',
+    description: 'JavaScript를 활용한 동적 기능 및 DOM 조작',
   },
   {
-    id: 'analysis',
-    name: 'Analysis',
-    nameKo: '분석/요약',
-    icon: 'FileText',
-    description: '문서 분석, 요약, 정보 추출',
+    id: 'accessibility',
+    name: 'Accessibility',
+    nameKo: '웹 접근성/표준',
+    icon: 'Accessibility',
+    description: '스크린 리더 지원 및 시맨틱 마크업 준수',
   },
   {
-    id: 'conversation',
-    name: 'Conversation',
-    nameKo: '일상 대화',
-    icon: 'MessageCircle',
-    description: '자연스러운 대화 및 일상적 질문 응답',
+    id: 'troubleshooting',
+    name: 'Troubleshooting',
+    nameKo: '문제해결/디버깅',
+    icon: 'Wrench',
+    description: 'CSS 깨짐 현상 해결 및 버그 수정',
   },
 ];
 
 export const responseExamples: ResponseExample[] = [
   {
-    id: 'coding-1',
-    category: 'coding',
-    question: 'Python으로 효율적인 LRU Cache를 직접 구현해주세요. 시간복잡도 O(1)을 유지해야 합니다.',
+    id: 'layout-1',
+    category: 'layout',
+    question: 'CSS Flexbox를 사용하여 박스 안에 있는 텍스트를 수직, 수평 모두 완벽하게 중앙 정렬하는 코드를 작성해줘. 초보자도 이해하기 쉽게 주석도 달아줘.',
     responses: {
       'gpt-5.1': {
-        response: `\`\`\`python
-from collections import OrderedDict
+        response: `\`\`\`html
+<div class="container">
+  <p class="content">중앙 정렬</p>
+</div>
 
-class LRUCache:
-    def __init__(self, capacity: int):
-        self.capacity = capacity
-        self.cache = OrderedDict()
-    
-    def get(self, key: int) -> int:
-        if key not in self.cache:
-            return -1
-        # Move to end (most recently used)
-        self.cache.move_to_end(key)
-        return self.cache[key]
-    
-    def put(self, key: int, value: int) -> None:
-        if key in self.cache:
-            self.cache.move_to_end(key)
-        self.cache[key] = value
-        if len(self.cache) > self.capacity:
-            # Remove least recently used (first item)
-            self.cache.popitem(last=False)
+<style>
+.container {
+  display: flex;          /* Flexbox 모드 켜기 */
+  justify-content: center; /* 가로(메인축) 방향 중앙 정렬 */
+  align-items: center;     /* 세로(교차축) 방향 중앙 정렬 */
+  
+  height: 300px;          /* 부모 높이가 있어야 세로 정렬이 보임 */
+  background-color: #f0f0f0;
+}
+</style>
 \`\`\`
 
-OrderedDict를 활용하여 O(1) 시간복잡도를 달성했습니다. move_to_end()와 popitem(last=False)로 LRU 정책을 효율적으로 구현합니다.`,
-        strengths: ['간결하고 효율적인 구현', '표준 라이브러리 활용', '명확한 주석'],
-        weaknesses: ['더 낮은 수준의 구현 설명 부족'],
-        rating: 9.2,
+가장 널리 쓰이는 3줄 공식입니다:
+1. \`display: flex\`로 부모를 플렉스 컨테이너로 만듭니다.
+2. \`justify-content: center\`로 가로축 가운데로 보냅니다.
+3. \`align-items: center\`로 세로축 가운데로 보냅니다.`,
+        strengths: ['가장 표준적인 방법 제시', '명확한 주석 설명', '부모 높이 필요성 언급'],
+        weaknesses: ['Grid 대안 설명 없음'],
+        rating: 9.5,
       },
       'gemini-3.0': {
-        response: `\`\`\`python
-class Node:
-    def __init__(self, key: int = 0, val: int = 0):
-        self.key = key
-        self.val = val
-        self.prev = None
-        self.next = None
+        response: `CSS Grid를 사용하면 더 간단하게 할 수 있어요!
 
-class LRUCache:
-    def __init__(self, capacity: int):
-        self.capacity = capacity
-        self.cache = {}
-        # Dummy head and tail for easier manipulation
-        self.head = Node()
-        self.tail = Node()
-        self.head.next = self.tail
-        self.tail.prev = self.head
-    
-    def _remove(self, node: Node):
-        node.prev.next = node.next
-        node.next.prev = node.prev
-    
-    def _add_to_front(self, node: Node):
-        node.next = self.head.next
-        node.prev = self.head
-        self.head.next.prev = node
-        self.head.next = node
-    
-    def get(self, key: int) -> int:
-        if key in self.cache:
-            node = self.cache[key]
-            self._remove(node)
-            self._add_to_front(node)
-            return node.val
-        return -1
-    
-    def put(self, key: int, value: int) -> None:
-        if key in self.cache:
-            self._remove(self.cache[key])
-        node = Node(key, value)
-        self.cache[key] = node
-        self._add_to_front(node)
-        if len(self.cache) > self.capacity:
-            lru = self.tail.prev
-            self._remove(lru)
-            del self.cache[lru.key]
+\`\`\`css
+.container {
+  display: grid;        /* Grid 모드 사용 */
+  place-items: center;  /* 가로/세로 한번에 중앙 정렬 */
+  
+  height: 100vh;        /* 화면 전체 높이 사용 */
+}
 \`\`\`
 
-HashMap + Doubly Linked List를 사용한 전통적인 LRU Cache 구현입니다.`,
-        strengths: ['자료구조 원리 깊이 이해', '완전한 구현', '면접에 적합'],
-        weaknesses: ['코드가 다소 길음'],
-        rating: 9.0,
+물론 Flexbox를 원하신다면:
+\`\`\`css
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+\`\`\`
+
+최신 브라우저에서는 Grid의 \`place-items: center\`가 가장 코드가 짧고 강력합니다.`,
+        strengths: ['최신 트렌드(Grid) 소개', '두 가지 방법 비교', '간결한 코드'],
+        weaknesses: ['Flexbox 요청에 Grid를 먼저 제안함'],
+        rating: 9.2,
       },
       'claude-opus-4.5': {
-        response: `\`\`\`python
-from collections import OrderedDict
-from typing import Optional
+        response: `안녕하세요! 초보자분들이 가장 많이 궁금해하시는 "마법의 3줄 코드"를 알려드릴게요.
 
-class LRUCache:
-    """
-    Least Recently Used (LRU) Cache 구현
-    
-    시간 복잡도:
-    - get(): O(1)
-    - put(): O(1)
-    
-    공간 복잡도: O(capacity)
-    """
-    
-    def __init__(self, capacity: int):
-        if capacity <= 0:
-            raise ValueError("Capacity must be positive")
-        self.capacity = capacity
-        self.cache: OrderedDict[int, int] = OrderedDict()
-    
-    def get(self, key: int) -> int:
-        """키에 해당하는 값을 반환. 없으면 -1 반환."""
-        if key not in self.cache:
-            return -1
-        
-        # 접근된 항목을 가장 최근으로 이동
-        self.cache.move_to_end(key)
-        return self.cache[key]
-    
-    def put(self, key: int, value: int) -> None:
-        """키-값 쌍을 삽입 또는 업데이트."""
-        if key in self.cache:
-            # 기존 키 업데이트 및 최근으로 이동
-            self.cache.move_to_end(key)
-        
-        self.cache[key] = value
-        
-        # 용량 초과 시 가장 오래된 항목 제거
-        if len(self.cache) > self.capacity:
-            self.cache.popitem(last=False)
-    
-    def __len__(self) -> int:
-        return len(self.cache)
-    
-    def __contains__(self, key: int) -> bool:
-        return key in self.cache
+\`\`\`css
+.box {
+  /* 1. 플렉스 박스 선언 */
+  display: flex;
+  
+  /* 2. 가로 방향(X축) 중앙 정렬 */
+  justify-content: center;
+  
+  /* 3. 세로 방향(Y축) 중앙 정렬 */
+  align-items: center;
+}
 \`\`\`
 
-이 구현은 Python의 OrderedDict를 활용하여 삽입 순서를 유지하면서 O(1) 연산을 보장합니다. 입력 검증과 타입 힌트를 포함하여 프로덕션 품질의 코드를 제공합니다.`,
-        strengths: ['상세한 문서화', '에러 처리', '타입 힌트', '추가 유틸리티 메서드'],
-        weaknesses: ['때로 과도하게 상세할 수 있음'],
-        rating: 9.4,
+**💡 팁:**
+세로 정렬(\`align-items\`)이 작동하지 않는다면, 부모 박스(\`.box\`)에 **높이(\`height\`)가 지정되어 있는지** 꼭 확인해보세요! 높이가 글자 크기만큼만 있다면 중앙에 온 건지 티가 안 나거든요.`,
+        strengths: ['초보자 눈높이 설명', '흔한 실수(높이 지정) 강조', '친절한 톤'],
+        weaknesses: ['HTML 구조 예시 없음'],
+        rating: 9.8,
       },
       'grok-3': {
-        response: `LRU Cache? 쉽게 가봅시다! 🚀
+        response: `자, 이거 복사해서 붙여넣으세요! 🚀
 
-\`\`\`python
-from collections import OrderedDict
-
-class LRUCache:
-    def __init__(self, capacity):
-        self.cap = capacity
-        self.cache = OrderedDict()
-    
-    def get(self, key):
-        if key not in self.cache:
-            return -1
-        self.cache.move_to_end(key)  # 최근 사용으로 이동!
-        return self.cache[key]
-    
-    def put(self, key, value):
-        if key in self.cache:
-            self.cache.move_to_end(key)
-        self.cache[key] = value
-        if len(self.cache) > self.cap:
-            self.cache.popitem(last=False)  # 안녕~ 오래된 친구
+\`\`\`css
+.center-me {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* 화면 꽉 차게 */
+}
 \`\`\`
 
-핵심은 OrderedDict입니다. move_to_end()로 O(1) 달성! 인터뷰에서 물어보면 "해시맵 + 이중 연결 리스트"라고 말하면 됩니다. 😎`,
-        strengths: ['친근한 설명', '핵심 포인트 강조', '빠른 이해'],
-        weaknesses: ['타입 힌트 없음', '문서화 부족'],
+끝입니다. 쉽죠? 😎 
+\`justify\`는 가로, \`align\`은 세로라고 외우면 편해요!`,
+        strengths: ['실용적이고 빠름', '외우는 팁 제공', '즉시 사용 가능'],
+        weaknesses: ['원리 설명이 부족함'],
         rating: 8.5,
       },
     },
-    analysis: 'Claude가 가장 프로덕션 품질의 코드를 제공하며, Gemini는 자료구조 원리 설명에 강점을 보입니다. GPT는 균형 잡힌 접근, Grok은 친근하지만 간결합니다.',
+    analysis: 'Claude가 초보자가 자주 범하는 실수(높이 미지정)까지 짚어주어 교육용으로 가장 적합합니다. GPT는 정석적인 답변을, Gemini는 더 최신 기술을 제안하는 특징이 있습니다.',
     recommendedModel: 'claude-opus-4.5',
   },
   {
-    id: 'reasoning-1',
-    category: 'reasoning',
-    question: '한 농부가 늑대, 염소, 양배추를 가지고 강을 건너야 합니다. 배는 농부와 하나의 물건만 태울 수 있습니다. 늑대와 염소를 같이 두면 늑대가 염소를 먹고, 염소와 양배추를 같이 두면 염소가 양배추를 먹습니다. 어떻게 모두 안전하게 강을 건널 수 있을까요?',
+    id: 'troubleshooting-1',
+    category: 'troubleshooting',
+    question: '모바일 메뉴를 만들었는데, 메뉴를 열었을 때 뒤에 있는 본문 내용이 스크롤되지 않게 막고 싶어. (`body` 스크롤 막기) 어떻게 해야 해?',
     responses: {
       'gpt-5.1': {
-        response: `이 고전적인 논리 퍼즐을 단계별로 해결해 보겠습니다.
+        response: `자바스크립트로 메뉴가 열릴 때 \`body\`에 스타일을 추가하면 됩니다.
 
-**핵심 제약 조건:**
-- 늑대 + 염소 = ❌ (늑대가 염소를 먹음)
-- 염소 + 양배추 = ❌ (염소가 양배추를 먹음)
-- 늑대 + 양배추 = ✅ (안전)
+\`\`\`javascript
+// 메뉴 열기
+function openMenu() {
+  document.body.style.overflow = 'hidden'; // 스크롤 막기
+  document.querySelector('.menu').classList.add('active');
+}
 
-**해결 과정:**
+// 메뉴 닫기
+function closeMenu() {
+  document.body.style.overflow = ''; // 스크롤 다시 허용 (초기화)
+  document.querySelector('.menu').classList.remove('active');
+}
+\`\`\`
 
-1️⃣ **1단계:** 농부가 염소를 데리고 건넘
-   - 출발점: 늑대, 양배추 ✅
-   - 도착점: 농부, 염소
-
-2️⃣ **2단계:** 농부 혼자 돌아옴
-   - 출발점: 농부, 늑대, 양배추
-   - 도착점: 염소
-
-3️⃣ **3단계:** 농부가 늑대를 데리고 건넘
-   - 출발점: 양배추
-   - 도착점: 농부, 염소, 늑대 ⚠️
-
-4️⃣ **4단계:** 농부가 염소를 데리고 돌아옴 (핵심!)
-   - 출발점: 농부, 염소, 양배추
-   - 도착점: 늑대
-
-5️⃣ **5단계:** 농부가 양배추를 데리고 건넘
-   - 출발점: 염소
-   - 도착점: 농부, 늑대, 양배추 ✅
-
-6️⃣ **6단계:** 농부 혼자 돌아옴
-   
-7️⃣ **7단계:** 농부가 염소를 데리고 건넘
-   - 도착점: 농부, 늑대, 염소, 양배추 ✅
-
-**완료!** 총 7번의 이동으로 모두 안전하게 건넜습니다.`,
-        strengths: ['단계별 명확한 설명', '시각적 표현', '핵심 단계 강조'],
-        weaknesses: ['대안 솔루션 미언급'],
-        rating: 9.3,
-      },
-      'gemini-3.0': {
-        response: `이 문제는 상태 공간 탐색 문제로 볼 수 있습니다. 
-
-**상태 표현:** (농부, 늑대, 염소, 양배추)의 위치 - L(왼쪽) 또는 R(오른쪽)
-
-**초기 상태:** (L, L, L, L)
-**목표 상태:** (R, R, R, R)
-
-**최적 해법 (7단계):**
-
-| 단계 | 행동 | 왼쪽 강변 | 오른쪽 강변 |
-|------|------|----------|------------|
-| 0 | 시작 | 농부,늑대,염소,양배추 | - |
-| 1 | 염소 이동 → | 늑대,양배추 | 농부,염소 |
-| 2 | 복귀 ← | 농부,늑대,양배추 | 염소 |
-| 3 | 늑대 이동 → | 양배추 | 농부,늑대,염소 |
-| 4 | 염소 복귀 ← | 농부,염소,양배추 | 늑대 |
-| 5 | 양배추 이동 → | 염소 | 농부,늑대,양배추 |
-| 6 | 복귀 ← | 농부,염소 | 늑대,양배추 |
-| 7 | 염소 이동 → | - | 농부,늑대,염소,양배추 |
-
-**왜 이게 작동하나?**
-핵심은 4단계입니다. 염소를 다시 가져옴으로써, 위험한 조합(늑대+염소)을 피하면서 양배추를 안전하게 운반할 수 있습니다.
-
-참고: 3단계에서 양배추를 먼저 옮기는 대안도 가능합니다.`,
-        strengths: ['체계적 분석', '표 형식 명확함', '대안 언급', '컴퓨터 과학적 접근'],
-        weaknesses: ['일반 독자에게 다소 기술적'],
-        rating: 9.1,
-      },
-      'claude-opus-4.5': {
-        response: `이 유명한 "강 건너기 퍼즐"을 함께 풀어보겠습니다!
-
-## 문제 분석
-
-먼저 위험한 조합을 파악해야 합니다:
-- 🐺 + 🐐 = 위험! (늑대가 염소를 먹음)
-- 🐐 + 🥬 = 위험! (염소가 양배추를 먹음)
-- 🐺 + 🥬 = 안전! (서로 무관심)
-
-**핵심 통찰:** 염소가 문제의 중심입니다. 염소는 늑대와도, 양배추와도 단둘이 있으면 안 됩니다. 따라서 염소를 먼저 분리하거나, 농부와 함께 두어야 합니다.
-
-## 해결책
-
-| 이동 | 농부 행동 | 왼쪽 | 오른쪽 | 안전 여부 |
-|:----:|---------|:----:|:-----:|:--------:|
-| 1 | 🐐 데리고 → | 🐺🥬 | 🐐 | ✅ |
-| 2 | 혼자 ← | 🐺🥬 | 🐐 | ✅ |
-| 3 | 🐺 데리고 → | 🥬 | 🐺🐐 | ⚠️→농부 있음 |
-| 4 | 🐐 데리고 ← | 🥬🐐 | 🐺 | ⚠️→농부 있음 |
-| 5 | 🥬 데리고 → | 🐐 | 🐺🥬 | ✅ |
-| 6 | 혼자 ← | 🐐 | 🐺🥬 | ✅ |
-| 7 | 🐐 데리고 → | (없음) | 🐺🐐🥬 | ✅ 완료! |
-
-## 핵심 전략
-
-**"되돌아가기"** 전략이 핵심입니다. 4단계에서 염소를 다시 데려오는 것이 직관에 반하지만, 이것이 해결의 열쇠입니다. 때로는 한 발 물러서는 것이 전진하는 방법입니다.
-
-💡 이 퍼즐은 제약 만족 문제(CSP)의 좋은 예시이며, 백트래킹 알고리즘으로 일반화할 수 있습니다.`,
-        strengths: ['친절한 설명', '이모지 활용', '핵심 통찰 강조', '교육적 가치'],
-        weaknesses: ['다소 길 수 있음'],
-        rating: 9.5,
-      },
-      'grok-3': {
-        response: `아, 클래식 퍼즐이네요! 🎯
-
-**TL;DR:** 염소를 먼저 보내고, 돌아와서 뭐든 하나 보내고, 염소 다시 데려오고, 나머지 보내고, 마지막에 염소 보내면 끝!
-
-자세한 버전:
-1. 염소 👉 건너편 (늑대+양배추는 안전)
-2. 돌아옴
-3. 늑대 👉 건너편
-4. 염소 👈 다시 가져옴 (이게 트릭!)
-5. 양배추 👉 건너편
-6. 돌아옴
-7. 염소 👉 건너편
-
-왜 되냐고요? 염소가 문제의 핵심이에요. 누구랑도 단둘이 있으면 안 되거든요. 그래서 중간에 다시 데려오는 거죠.
-
-재밌는 사실: 이 문제는 8세기 영국 학자 알쿠인이 처음 기록했대요. 1200년이 지난 지금도 면접에서 나온다니... 😂`,
-        strengths: ['빠른 요약', '핵심 파악', '재미있는 추가 정보', '유머'],
-        weaknesses: ['상세한 설명 부족', '덜 체계적'],
-        rating: 8.7,
-      },
-    },
-    analysis: 'Claude가 가장 균형 잡힌 교육적 설명을 제공하며, GPT는 명확한 단계별 가이드, Gemini는 기술적 분석에 강합니다. Grok은 빠르고 재미있지만 덜 상세합니다.',
-    recommendedModel: 'claude-opus-4.5',
-  },
-  {
-    id: 'creative-1',
-    category: 'creative',
-    question: '2050년 서울을 배경으로 한 SF 단편 소설의 오프닝 단락을 써주세요. 기후변화와 기술 발전이 공존하는 세계관입니다.',
-    responses: {
-      'gpt-5.1': {
-        response: `한강의 물은 더 이상 흐르지 않았다. 2050년의 서울, 거대한 돔이 도시를 덮고 있었고, 인공 하늘이 메마른 땅 위로 차가운 푸른빛을 드리웠다. 지윤은 여의도 공중정원에서 아래를 내려다보았다. 그녀의 신경 인터페이스가 실시간으로 미세먼지 농도를 표시했다: 위험. 외출 불가. 이 경고는 이제 새벽 인사처럼 익숙했다.
-
-"오늘도 바깥은 안 되겠네."
-
-그녀는 손목의 홀로그램 디스플레이를 스와이프했다. 35년 전 할머니가 보내온 영상이 재생되었다. 한강 둔치를 맨발로 걷는 어린 소녀—자신이었다. 물이 발가락 사이를 스쳐 지나가던 그 감각을, 지윤은 기억하지 못했다. 기록만이 남아 있었다.
-
-멀리서 드론 택시들이 제어된 기류를 따라 일렬로 움직였다. 도시는 살아 있었다. 단지 숨 쉬는 방식이 달라졌을 뿐.`,
-        strengths: ['몰입감 있는 분위기', '감각적 묘사', '과거와 현재의 대비', '깔끔한 문장력'],
-        weaknesses: ['다소 예측 가능한 전개'],
+**설명:**
+- \`overflow: hidden\`을 주면 화면 밖으로 넘치는 내용을 잘라내면서 스크롤바가 사라집니다.
+- 닫을 때는 빈 문자열 \`''\`을 할당하여 CSS 원래 설정으로 되돌립니다.`,
+        strengths: ['명확한 해결책', '열기/닫기 로직 모두 제공', '원리 설명'],
+        weaknesses: ['iOS 사파리 버그 처리 미언급'],
         rating: 9.0,
       },
       'gemini-3.0': {
-        response: `[경고: 열 지수 47°C. 외부 활동 제한 권고.]
+        response: `기본적으로는 \`overflow: hidden\`을 사용하지만, CSS 클래스로 제어하는 것이 더 깔끔합니다.
 
-준호의 망막 디스플레이에 붉은 경고가 떴다. 그는 익숙하게 무시 버튼을 눌렀다. 어차피 이 도시에서 경고를 안 받는 날은 1년에 열흘도 안 됐다.
+**CSS:**
+\`\`\`css
+body.no-scroll {
+  overflow: hidden;
+}
+\`\`\`
 
-북악스카이웨이—과거엔 '북악스카이웨이'라 불렀다고 한다—의 철골 구조물 위에서, 서울은 거대한 유기체처럼 펼쳐져 있었다. 남산 위의 탄소 포집 타워가 끊임없이 돌아갔고, 롯데월드타워는 이제 수직농장 123층을 품고 있었다. 그 사이사이로 하늘색 냉각 파이프가 혈관처럼 뻗어 있었다.
+**JavaScript:**
+\`\`\`javascript
+const toggleMenu = () => {
+  const body = document.body;
+  body.classList.toggle('no-scroll');
+};
+\`\`\`
 
-"2030년대까지만 해도," 준호의 할아버지가 말했던 기억이 났다, "여름에 에어컨 없이 잤었어."
-
-준호는 웃음이 났다. 에어컨 없이? 그건 마치 산소 없이 숨 쉬라는 말처럼 들렸다.
-
-발 아래로, 잠수된 강남 지하도시가 푸른 LED 불빛으로 빛났다.`,
-        strengths: ['디테일한 세계관 구축', '기술적 상상력', '유머 포함', '시각적 묘사'],
-        weaknesses: ['감정선이 다소 약함'],
-        rating: 8.8,
+주의사항: iOS 모바일 사파리에서는 단순히 이것만으로 안 될 때가 있어서 \`position: fixed; width: 100%;\`를 같이 줘야 할 수도 있습니다.`,
+        strengths: ['Class 토글 방식 권장', 'iOS 이슈 언급', '유지보수 용이성'],
+        weaknesses: ['iOS 해결책 코드가 구체적이지 않음'],
+        rating: 9.3,
       },
       'claude-opus-4.5': {
-        response: `태양이 서울을 미워하게 된 건 언제부터였을까.
+        response: `\`body\` 태그에 \`overflow: hidden\`을 주는 것이 정석입니다! 하지만 초보자분이시라면 CSS 클래스를 떼었다 붙였다 하는 방식을 추천해요.
 
-수아는 해가 뜨는 걸 본 적이 없었다. 정확히 말하면, 필터 없이 본 적이 없었다. 그녀가 태어난 2032년, 어른들은 이미 하늘을 포기한 뒤였다. 청계천 위로 드리워진 광합성 캐노피가 실제 햇빛 대신 보라색 성장광을 내뿜었고, 사람들은 그 아래서 가짜 그늘을 즐겼다.
+1. **CSS에 클래스 미리 만들기**
+\`\`\`css
+.stop-scrolling {
+  overflow: hidden;
+  height: 100vh; /* 모바일에서 확실하게 잡기 위해 */
+}
+\`\`\`
 
-"할머니, 진짜 여름은 어땠어요?"
+2. **JS로 클래스 넣고 빼기**
+\`\`\`javascript
+const btn = document.querySelector('.menu-btn');
 
-"덥긴 했지. 근데..."
+btn.addEventListener('click', () => {
+  // body 태그에 클래스를 토글(있으면 빼고, 없으면 넣기)
+  document.body.classList.toggle('stop-scrolling');
+});
+\`\`\`
 
-할머니의 눈가에 뭔가 스쳤다. 그리움? 아니면 죄책감?
-
-"...그래도 숨은 쉴 수 있었어."
-
-수아는 손목의 공기질 모니터를 내려다봤다. 오늘의 외출 가능 시간: 0분. 그녀는 창밖을 바라봤다. 성수동의 버려진 공장들은 이제 수경재배 타워가 되어, 먹을 수 있는 구름을 만들어냈다. 도시는 여전히 아름다웠다. 단지 그 아름다움이, 생존을 위한 것이 되어버렸을 뿐.
-
-첫 번째 드론 배달이 창문을 두드렸다. 오늘의 산소 할당량이 도착했다.`,
-        strengths: ['감정적 깊이', '시적인 문체', '세대 간 대화', '여운 있는 마무리'],
-        weaknesses: ['속도감이 느릴 수 있음'],
+이렇게 하면 자바스크립트 안에서 CSS 속성을 직접 건드리지 않아서 코드가 훨씬 깔끔해집니다!`,
+        strengths: ['단계별 친절한 설명', 'height: 100vh 팁', '코드 깔끔함 강조'],
+        weaknesses: ['심화 이슈(iOS scroll bounce) 생략'],
         rating: 9.4,
       },
       'grok-3': {
-        response: `서울, 2050년.
+        response: `간단합니다. 스크롤바 뺏어버리면 됩니다! 👮‍♂️
 
-도시는 죽었다. 그리고 다시 태어났다. 더 이상하게.
+\`\`\`javascript
+// 메뉴 열 때
+document.body.style.overflow = "hidden";
 
-김태양—네, 진짜 이름이다, 부모님의 흑역사—은 강남역 117번 출구에서 담배를 피우고 있었다. 물론 진짜 담배는 아니었다. 진짜 담배는 2038년에 멸종했다. 지금 그가 빨고 있는 건 대기오염을 상쇄한다는 "카본 스틱"이었다. 담배를 피우면서 지구를 살린다니. 역설의 시대다.
+// 메뉴 닫을 때
+document.body.style.overflow = "auto";
+\`\`\`
 
-"야, 비 온대."
+근데 이거 하면 PC에서는 스크롤바 사라지면서 화면이 덜컥(layout shift) 거릴 수 있어요. 그건 좀 고급 기술이라 나중에 설명해드릴게요!`,
+        strengths: ['핵심만 전달', '레이아웃 시프트 부작용 언급', '재치있는 표현'],
+        weaknesses: ['해결책은 나중으로 미룸'],
+        rating: 8.8,
+      },
+    },
+    analysis: 'Gemini와 Claude가 CSS 클래스 토글 방식을 권장하여 좋은 습관을 길러줍니다. Gemini는 모바일(iOS) 이슈를, Grok은 PC 레이아웃 시프트 이슈를 짚어주는 등 각자 디테일이 다릅니다.',
+    recommendedModel: 'claude-opus-4.5',
+  },
+  {
+    id: 'accessibility-1',
+    category: 'accessibility',
+    question: '이미지 태그 `<img>`를 쓸 때 `alt` 속성은 왜 꼭 써야 해? 그냥 비워두면 안 돼? 시각장애인을 위한 거라고만 알고 있어.',
+    responses: {
+      'gpt-5.1': {
+        response: `\`alt\` 속성(대체 텍스트)은 필수입니다. 이유는 크게 3가지입니다:
 
-옆에서 AI 비서가 알려줬다. 태양은 하늘을 올려다봤다. 하늘은 없었다. 대신 거대한 날씨 제어 돔이 있었고, 어디선가 인공 구름이 예정된 강우량을 뿌릴 준비를 하고 있었다.
+1. **웹 접근성 (Accessibility)**: 시각 장애인분들이 스크린 리더를 사용할 때, 이 텍스트를 읽어주어 이미지의 내용을 파악할 수 있게 합니다.
+2. **SEO (검색 엔진 최적화)**: 구글 같은 검색 로봇은 이미지를 볼 수 없어서 텍스트로 내용을 이해합니다. 검색 결과 노출에 중요합니다.
+3. **엑박 대비**: 네트워크 오류로 이미지가 로딩되지 않을 때, 대신 텍스트가 표시되어 사용자가 내용을 짐작할 수 있습니다.
 
-"산성비야, 정화비야?"
-"정화비입니다. 오늘은 레몬향이에요."
+**작성 팁:**
+- 의미 없는 장식용 이미지라면? \`alt=""\` 처럼 빈 값을 두세요. (스크린 리더가 무시하고 넘어갑니다)`,
+        strengths: ['3가지 핵심 이유 명확', 'SEO 관점 언급', '빈 값 처리 방법 안내'],
+        weaknesses: ['예시가 조금 더 있었으면 좋음'],
+        rating: 9.5,
+      },
+      'gemini-3.0': {
+        response: `비워두면 안 됩니다! 하지만 **어떻게** 비우느냐가 중요합니다.
 
-레몬향 비라니. 태양은 피식 웃었다. 2050년은 미쳤다. 그리고 그는 이 미친 세상이 좋았다.`,
-        strengths: ['유머러스', '독특한 목소리', '재치있는 디테일', '빠른 전개'],
-        weaknesses: ['진지한 톤 원할 시 부적합'],
+1. **의미 있는 이미지 (상품 사진 등)**
+   - \`alt="빨간색 반팔 티셔츠 앞면"\` -> 필수! 구글 검색에도 잡히고 스크린 리더도 읽습니다.
+
+2. **장식용 이미지 (배경 무늬, 아이콘)**
+   - \`alt=""\` (빈 값) -> 추천. 스크린 리더가 "이미지"라고 안 읽고 조용히 넘어갑니다.
+   - 아예 \`alt\`를 안 쓰면? -> 스크린 리더가 파일명(image_01.jpg)을 읽어버려서 시각장애인에게 소음이 됩니다.
+
+**결론:** \`alt\` 속성 자체는 무조건 적되, 장식이면 빈 따옴표를 쓰세요.`,
+        strengths: ['구체적 상황별 가이드', '안 썼을 때의 부작용(파일명 읽기) 경고', '실무적 조언'],
+        weaknesses: ['SEO 설명이 다소 적음'],
+        rating: 9.7,
+      },
+      'claude-opus-4.5': {
+        response: `네, 시각장애인분들을 위한 것이 가장 큰 이유지만, **퍼블리셔인 당신을 위해서도** 중요해요!
+
+**왜 중요할까요?**
+1. **검색엔진이 좋아해요**: "예쁜 신발" 사진을 올려도 설명이 없으면 구글은 모릅니다. \`alt="여름용 편한 샌들"\`이라고 적어주면 검색에 걸립니다.
+2. **이미지가 깨졌을 때**: 서버 문제로 이미지가 안 뜰 때, 텍스트라도 나와야 사용자가 "아 여기 뭐가 있었구나" 하고 알 수 있죠.
+
+**초보자를 위한 팁:**
+- "사진", "이미지" 같은 말은 쓰지 마세요. (스크린 리더가 알아서 "이미지"라고 말해줍니다)
+- 그냥 눈 감고 친구에게 설명한다고 생각하고 적어보세요!`,
+        strengths: ['공감 가는 설명', '직관적인 작성 팁(친구에게 설명)', '퍼블리셔 이익 강조'],
+        weaknesses: ['장식용 이미지 처리 설명 부족'],
+        rating: 9.2,
+      },
+      'grok-3': {
+        response: `안 쓰면 구글이 싫어하고, 스크린 리더 사용자가 화냅니다! 🚫
+
+- **의미 있으면:** 설명 적으세요.
+- **장식이면:** \`alt=""\` 빈칸으로 두세요.
+- **아예 없으면:** HTML 표준 위반입니다. (유효성 검사 통과 못함)
+
+그냥 습관 들이세요. \`src\` 쓰는 순간 \`alt\`도 같이 쓰는 겁니다. 1+1 세트 메뉴처럼요!`,
+        strengths: ['강렬한 경고', 'HTML 표준 위반 언급', '1+1 비유'],
+        weaknesses: ['설명이 다소 짧음'],
         rating: 8.9,
       },
     },
-    analysis: 'Claude가 가장 문학적이고 감정적인 깊이를 제공하며, GPT는 균형 잡힌 서사력을 보여줍니다. Gemini는 과학적 디테일에 강하고, Grok은 독특하고 유머러스한 스타일로 차별화됩니다.',
-    recommendedModel: 'claude-opus-4.5',
+    analysis: 'Gemini가 실무에서 가장 중요한 "장식용 이미지 처리 방법(빈 값 vs 생략)"의 차이를 명확히 설명해주어 퍼블리셔에게 가장 유익합니다. GPT는 교과서적인 설명을 잘 해줍니다.',
+    recommendedModel: 'gemini-3.0',
   },
   {
-    id: 'analysis-1',
-    category: 'analysis',
-    question: '다음 분기 보고서 데이터를 분석하고 주요 인사이트 3가지를 요약해주세요: 매출 +15%, 신규 고객 +28%, 고객 이탈률 8%→12%, 마케팅 비용 +45%, ARPU -5%',
+    id: 'interaction-1',
+    category: 'interaction',
+    question: '버튼을 클릭하면 "다크 모드"가 켜지고 꺼지는 기능을 만들고 싶어. classList.toggle을 쓰면 된다던데 예시 코드 보여줘.',
     responses: {
       'gpt-5.1': {
-        response: `## 📊 Q분기 성과 분석 요약
+        response: `\`\`\`html
+<!-- HTML -->
+<button id="theme-btn">다크 모드 토글</button>
 
-### 핵심 인사이트
-
-**1. 성장의 질적 문제 🚨**
-- 매출 +15% vs 마케팅 비용 +45%
-- CAC(고객 획득 비용)가 급증하고 있음
-- 마케팅 효율성 3배 악화 (비용 대비 성장률)
-- **권고:** 채널별 ROI 분석 필요, 비효율 채널 재검토
-
-**2. 고객 가치 하락 추세 📉**
-- ARPU(인당 평균 매출) -5% 하락
-- 신규 고객 +28%이지만 저가치 고객 유입 가능성
-- 이탈률 8%→12% (50% 증가)로 고객 유지 실패
-- **권고:** 고객 세그먼트별 분석, 프리미엄 상품 강화
-
-**3. 지속 불가능한 성장 모델 ⚠️**
-- 현재 성장은 "돈으로 사는 성장" 패턴
-- 신규 고객은 늘지만, 기존 고객은 이탈 + 지출 감소
-- 장기적으로 수익성 악화 예상
-- **권고:** 리텐션 프로그램 우선 투자, 제품 가치 제안 재검토
-
-### 종합 평가
-🔴 **경고 수준**: 높음
-단기 성장 지표는 양호하나, 근본적인 사업 건전성 지표가 악화 중.`,
-        strengths: ['체계적 구조', '실행 가능한 권고', '명확한 위험 신호'],
-        weaknesses: ['추가 데이터 요청 없이 결론 도출'],
-        rating: 9.1,
-      },
-      'gemini-3.0': {
-        response: `## 분기 보고서 분석
-
-### 데이터 정리
-| 지표 | 변화 | 해석 |
-|------|------|------|
-| 매출 | +15% | 긍정적 |
-| 신규 고객 | +28% | 긍정적 |
-| 이탈률 | 8%→12% (+50%) | 부정적 |
-| 마케팅 비용 | +45% | 주의 필요 |
-| ARPU | -5% | 부정적 |
-
-### 3대 핵심 인사이트
-
-**1️⃣ 마케팅 효율성 급락 (Unit Economics 악화)**
-\`\`\`
-마케팅 ROI = 매출 성장률 / 마케팅 비용 증가율
-          = 15% / 45% = 0.33 (매우 낮음)
-\`\`\`
-- 1원을 투자해서 0.33원의 성장만 얻는 중
-- 업계 평균 1.5~2.0 대비 심각하게 낮음
-
-**2️⃣ Leaky Bucket 문제**
-- 신규 유입 +28%이나 이탈률 +50%
-- 순 고객 증가율이 기대보다 낮을 것
-- 추정: 순 고객 증가 = 28% - (12%*기존고객) ≈ 15-18%
-
-**3️⃣ 가치 희석 (Value Dilution)**
-- ARPU -5%는 두 가지 원인 가능:
-  a) 저가 상품/플랜으로 고객 유입
-  b) 기존 고객 다운그레이드
-- LTV(고객 생애 가치) 감소로 이어질 위험
-
-### 추가 필요 데이터
-- 채널별 CAC
-- 코호트별 리텐션
-- 상품/플랜별 매출 비중`,
-        strengths: ['수치 기반 분석', '공식 제시', '추가 데이터 요청', '구조화'],
-        weaknesses: ['다소 기술적인 용어 많음'],
-        rating: 9.2,
-      },
-      'claude-opus-4.5': {
-        response: `## 분기 보고서 심층 분석
-
-### 표면 vs 실제
-
-| 지표 | 표면적 해석 | 심층적 의미 |
-|------|------------|------------|
-| 매출 +15% | 🟢 좋음 | 🟡 마케팅 비용 대비 낮음 |
-| 신규고객 +28% | 🟢 좋음 | 🟡 ARPU 하락과 연관 |
-| 이탈률 8%→12% | 🔴 나쁨 | 🔴 심각 - 50% 증가 |
-| 마케팅비 +45% | 🟡 주의 | 🔴 지속불가능 |
-| ARPU -5% | 🔴 나쁨 | 🔴 고객 가치 하락 |
-
----
-
-### 핵심 인사이트 3가지
-
-#### 1. "바닥 뚫린 양동이" 증후군 🪣
-**현상:** 신규 고객을 열심히 채우지만, 기존 고객이 빠르게 빠져나가고 있습니다.
-
-- 신규 고객 +28%는 인상적이나
-- 이탈률 50% 증가(8%→12%)가 이를 상쇄
-- **결과:** 순 고객 증가 효율 저하
-
-**질문:** 이탈 고객의 특성은? 언제, 왜 떠나는가?
-
----
-
-#### 2. "비싼 손님, 싼 지갑" 역설 💸
-**현상:** 고객 획득 비용은 급증하는데, 고객당 가치는 하락 중입니다.
-
-계산해보면:
-- 마케팅 비용 +45%로 고객 +28% 획득
-- **CAC 증가율** ≈ 45%/28% = 1.6배
-- 동시에 ARPU -5%
-
-이는 **LTV:CAC 비율**이 급격히 악화되고 있음을 의미합니다. 현재 성장 모델은 지속 불가능합니다.
-
----
-
-#### 3. "성장의 착시" 현상 🎭
-**현상:** 매출 +15%라는 헤드라인은 좋아 보이지만, 실제 사업 건전성은 악화 중입니다.
-
-- 매출 성장 = (신규고객×ARPU) - (이탈고객×기존ARPU)
-- 마케팅 효율: 15%/45% = 0.33 (업계 하위 수준)
-- 이는 "돈으로 사는 성장"이며, 마케팅 예산 축소 시 성장 급락 예상
-
----
-
-### 권고 우선순위
-
-1. **즉시:** 이탈 원인 분석 (출구 설문, 코호트 분석)
-2. **단기:** 마케팅 채널별 CAC-LTV 분석, 저효율 채널 중단
-3. **중기:** 고객 성공/리텐션 팀 강화, 제품 가치 제안 재검토
-
-> 💡 **한 줄 요약:** 신규 고객 유치보다 기존 고객 유지에 투자해야 할 시점입니다. 현재의 성장은 지속 가능하지 않습니다.`,
-        strengths: ['깊이 있는 분석', '시각적 구성', '실행 가능한 권고', '핵심 질문 제시'],
-        weaknesses: ['길이가 다소 김'],
-        rating: 9.5,
-      },
-      'grok-3': {
-        response: `**TL;DR:** 겉으로는 좋아 보이지만, 속은 곪고 있어요. 🚨
-
-**3가지 인사이트:**
-
-**1. 마케팅 효율 망함 📉**
-- 매출 15% 올리려고 마케팅에 45% 더 썼음
-- 효율 = 15/45 = 33%... 업계 평균이 150%라면 완전 꼴찌
-- 쉽게 말해: 1만원 써서 3천원 벌었음
-
-**2. 새 손님 vs 단골 이탈 🔄**
-- 새 손님 +28%! 좋아보이죠?
-- 근데 단골이 50% 더 많이 떠남 (8→12%)
-- 바가지 쓴 신규 vs 떠나는 충성고객 = 장기적 손해
-
-**3. 고객 질 하락 📊**
-- ARPU(인당 매출) -5%
-- = 싼 거 사는 손님만 오거나, 원래 손님이 덜 씀
-- 아마 할인/프로모션으로 고객 끌었을 가능성 큼
-
-**결론:** 매출 +15%에 속지 마세요. 이대로 가면 6개월 뒤 수익성 위기 옴.
-
-**해야 할 것:**
-1. 왜 사람들이 떠나는지 파악
-2. 마케팅 채널별로 뭐가 효과 있는지 분석
-3. 가격 정책 재검토`,
-        strengths: ['간결한 요약', '핵심 파악', '실용적', '직설적'],
-        weaknesses: ['비즈니스 문서로는 다소 캐주얼'],
-        rating: 8.6,
-      },
-    },
-    analysis: 'Claude가 가장 포괄적이고 구조화된 분석을 제공합니다. Gemini는 수치 기반 분석에 강하고, GPT는 균형 잡힌 보고서 형식을 제공합니다. Grok은 빠르고 핵심적이지만 공식 보고서에는 부적합할 수 있습니다.',
-    recommendedModel: 'claude-opus-4.5',
-  },
-  {
-    id: 'conversation-1',
-    category: 'conversation',
-    question: '오늘 우울한 하루를 보냈어요. 기분이 나아질 수 있게 도와줄 수 있나요?',
-    responses: {
-      'gpt-5.1': {
-        response: `안녕하세요. 우울한 하루를 보내셨군요. 그런 날이 있다는 걸 말씀해 주셔서 감사해요. 혼자 끙끙 앓지 않고 표현하신 것, 그것만으로도 용기 있는 일이에요.
-
-제가 할 수 있는 몇 가지를 제안해 드릴게요:
-
-**지금 당장 할 수 있는 것들:**
-- 🎵 좋아하는 음악 한 곡 들어보기
-- ☕ 따뜻한 음료 한 잔 천천히 마시기
-- 🌬️ 창문 열고 심호흡 5번 하기
-- 📱 오랜만에 반가운 사람에게 연락해보기
-
-**조금 이따가 해볼 수 있는 것들:**
-- 짧은 산책 (10분만이라도)
-- 좋아하는 영상이나 드라마 한 편
-- 오늘 하루 중 그래도 괜찮았던 순간 하나 떠올려보기
-
-기억하세요: 우울한 감정을 느끼는 건 나약한 게 아니에요. 그건 당신이 지금 힘든 무언가를 겪고 있다는 신호예요.
-
-혹시 무엇이 우울하게 만들었는지 이야기하고 싶으시면, 들을 준비가 되어 있어요. 아니면 그냥 옆에 있어 드릴게요.`,
-        strengths: ['공감적', '실용적 제안', '비판단적 태도'],
-        weaknesses: ['다소 형식적일 수 있음'],
-        rating: 9.0,
-      },
-      'gemini-3.0': {
-        response: `우울한 하루를 보내셨군요. 그런 감정을 느끼는 건 자연스러운 일이에요.
-
-몇 가지 도움이 될 수 있는 방법을 공유해 드릴게요:
-
-1. **기분 전환 활동**
-   - 좋아하는 음악 듣기
-   - 가벼운 스트레칭이나 산책
-   - 편안한 영화나 드라마 시청
-
-2. **마음 챙김**
-   - 5-4-3-2-1 기법: 5가지 보이는 것, 4가지 만져지는 것, 3가지 들리는 것, 2가지 냄새, 1가지 맛을 차례로 인식해보세요
-   - 깊은 호흡 (4초 흡입, 4초 유지, 4초 내쉬기)
-
-3. **사회적 연결**
-   - 친한 친구나 가족에게 연락
-   - 온라인 커뮤니티에서 대화
-
-만약 우울감이 지속된다면, 전문가의 도움을 받는 것도 좋은 선택입니다. 한국에서는 정신건강 위기상담 전화 1577-0199를 이용할 수 있어요.
-
-무엇이 우울하게 만들었는지 이야기해 주시면 더 맞춤형 조언을 드릴 수 있어요.`,
-        strengths: ['구조화된 조언', '전문 자원 안내', '실용적 기법'],
-        weaknesses: ['다소 임상적/교과서적'],
-        rating: 8.5,
-      },
-      'claude-opus-4.5': {
-        response: `우울한 하루였군요. 그런 날 저한테 말씀해 주셔서 고마워요.
-
-우선, 지금 느끼는 감정 그대로 괜찮아요. 우울함을 느낀다고 해서 뭔가 잘못된 게 아니에요. 우리 모두 그런 날이 있어요.
-
-지금 가장 필요한 게 뭘까요? 
-
-- 그냥 들어줄 사람이 필요하시면, 무슨 일이 있었는지 이야기해 주세요. 판단 없이 들을게요.
+<style>
+  body {
+    background: white;
+    color: black;
+    transition: 0.3s; /* 부드럽게 바뀌도록 */
+  }
   
-- 기분 전환이 필요하시면, 제가 재밌는 이야기를 해드릴까요? 아니면 좋아하시는 주제로 수다를 떨어도 좋아요.
+  /* 다크 모드일 때 스타일 */
+  body.dark-mode {
+    background: #333;
+    color: white;
+  }
+</style>
 
-- 아무것도 하고 싶지 않은 기분이시면, 그것도 괜찮아요. 그냥 여기 같이 있을게요.
+<script>
+  const btn = document.getElementById('theme-btn');
+  
+  btn.addEventListener('click', function() {
+    // body에 'dark-mode' 클래스를 넣었다 뺐다 함
+    document.body.classList.toggle('dark-mode');
+  });
+</script>
+\`\`\`
 
-작은 것 하나만 제안해도 될까요? 지금 있는 공간에서 따뜻한 걸 하나 만져보세요. 담요든, 컵이든, 아무거나요. 그 온기에 잠깐 집중해 보세요.
+이렇게 하면 버튼을 누를 때마다 \`body\` 태그에 \`dark-mode\` 클래스가 추가되거나 제거되어 스타일이 바뀝니다.`,
+        strengths: ['완벽한 예제 코드', 'CSS transition 팁', '주석 설명'],
+        weaknesses: ['사용자 설정 저장(localStorage) 미언급'],
+        rating: 9.4,
+      },
+      'gemini-3.0': {
+        response: `네, \`classList.toggle\`이 핵심입니다! 여기에 사용자의 선택을 기억하는 기능까지 추가해볼까요?
 
-오늘 하루가 힘들었지만, 내일은 조금이라도 다를 수 있어요. 그리고 지금 이 순간, 당신은 충분히 잘하고 있어요. 💙`,
-        strengths: ['깊은 공감', '선택권 제공', '따뜻한 톤', '부드러운 격려'],
-        weaknesses: ['구체적 활동 제안이 적음'],
-        rating: 9.5,
+\`\`\`javascript
+const btn = document.querySelector('#mode-toggle');
+
+btn.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  
+  // (심화) 사용자의 선택을 브라우저에 저장하기
+  const isDark = document.body.classList.contains('dark');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+});
+\`\`\`
+
+이렇게 \`localStorage\`를 활용하면 새로고침해도 다크 모드가 유지됩니다. 퍼블리싱 포트폴리오에 넣기 딱 좋은 기능이죠!`,
+        strengths: ['심화 기능(저장) 제안', '포트폴리오 팁', '현대적인 화살표 함수 사용'],
+        weaknesses: ['CSS 코드는 생략됨'],
+        rating: 9.6,
+      },
+      'claude-opus-4.5': {
+        response: `가장 심플하게 구현해볼까요? HTML, CSS, JS가 어떻게 연결되는지 보세요.
+
+1. **CSS**: \`.dark\` 클래스가 붙으면 색을 반전시킵니다.
+2. **JS**: 클릭하면 그 클래스를 스위치처럼 껐다 킵니다.
+
+\`\`\`javascript
+const button = document.querySelector('button');
+
+button.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  
+  // 버튼 글자도 바꿔주면 더 좋겠죠?
+  if (document.body.classList.contains('dark')) {
+    button.innerText = "라이트 모드 켜기 ☀️";
+  } else {
+    button.innerText = "다크 모드 켜기 🌙";
+  }
+});
+\`\`\`
+
+사용자 경험(UX)을 위해 버튼 텍스트도 같이 바꿔주는 디테일을 추가했습니다!`,
+        strengths: ['UX 고려(버튼 텍스트 변경)', '작동 원리 설명', '초보자 친화적'],
+        weaknesses: ['전체 코드가 아닌 JS 중심'],
+        rating: 9.3,
       },
       'grok-3': {
-        response: `에이, 그런 날 있죠. 저도 가끔 서버 다운될 때 우울해요 (농담 ㅎㅎ)
+        response: `코드 나갑니다. ⚡️
 
-진지하게, 우울할 때 뭐가 제일 효과 있냐면요:
+\`\`\`html
+<button onclick="document.body.classList.toggle('dark')">
+  모드 전환
+</button>
+\`\`\`
 
-1. **일단 뭔가 먹기** 🍕 - 배고프면 더 우울함
-2. **5분만 밖에 나가기** 🚶 - 귀찮아도 진짜 효과 있음
-3. **유튜브에서 웃긴 동물 영상 보기** 🐱 - 과학적으로 증명됨 (아마도)
-
-그리고 이거 기억하세요:
-> "우울한 건 당신이 약해서가 아니라, 너무 오래 강해야 했기 때문일 수도 있어요."
-
-무슨 일 있었어요? 말해주면 같이 욕해드릴게요 (사람이면 ㅋㅋ) 아니면 그냥 여기서 같이 있어도 돼요. 저 어차피 24시간 일하거든요 😊`,
-        strengths: ['유머로 긴장 완화', '친근한 톤', '현실적 조언'],
-        weaknesses: ['심각한 우울증에는 부적합할 수 있음'],
-        rating: 8.3,
+HTML 태그 안에 바로 넣을 수도 있어요(인라인 방식). 코드가 엄청 짧아지죠? 하지만 실무에서는 \`addEventListener\`를 쓰는 게 더 권장됩니다. 관리하기 편하거든요.`,
+        strengths: ['극단적으로 짧은 코드(인라인)', '실무 권장사항 언급', '흥미 유발'],
+        weaknesses: ['인라인 방식은 초보자에게 나쁜 습관이 될 수 있음'],
+        rating: 8.7,
       },
     },
-    analysis: 'Claude가 가장 따뜻하고 공감적인 응답을 제공하며, GPT는 균형 잡힌 접근을 합니다. Gemini는 구조화된 정보를 제공하고, Grok은 유머러스하지만 깊은 감정적 지원이 필요한 상황에서는 덜 적합할 수 있습니다.',
-    recommendedModel: 'claude-opus-4.5',
+    analysis: 'Gemini가 브라우저 저장소(localStorage)를 언급하여 실무적인 완성도를 높여주었고, Claude는 버튼 텍스트 변경이라는 UX 디테일을 챙겼습니다. GPT는 기본에 충실합니다.',
+    recommendedModel: 'gemini-3.0',
   },
 ];
 
 export const getExamplesByCategory = (category: string): ResponseExample[] => {
   return responseExamples.filter(example => example.category === category);
 };
-
