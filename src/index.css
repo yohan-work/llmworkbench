@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-navy-900 text-gray-100 font-sans antialiased;
+    background-image: 
+      radial-gradient(ellipse at top, rgba(66, 133, 244, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(16, 163, 127, 0.1) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    @apply bg-neon-blue/30 text-white;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-navy-800/50 backdrop-blur-xl border border-white/10 rounded-2xl;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-neon-green via-neon-blue to-neon-purple;
+  }
+
+  .neon-border {
+    @apply border border-neon-blue/30 shadow-[0_0_15px_rgba(0,212,255,0.1)];
+  }
+
+  .model-card-gpt {
+    @apply border-gpt/30 hover:border-gpt/60 hover:shadow-[0_0_30px_rgba(16,163,127,0.2)];
+  }
+
+  .model-card-gemini {
+    @apply border-gemini/30 hover:border-gemini/60 hover:shadow-[0_0_30px_rgba(66,133,244,0.2)];
+  }
+
+  .model-card-claude {
+    @apply border-claude/30 hover:border-claude/60 hover:shadow-[0_0_30px_rgba(204,120,92,0.2)];
+  }
+
+  .model-card-grok {
+    @apply border-grok/30 hover:border-grok/60 hover:shadow-[0_0_30px_rgba(29,161,242,0.2)];
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-gray-400 text-lg max-w-2xl;
+  }
+}
+
+@layer utilities {
+  .grid-bg {
+    background-size: 50px 50px;
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+  .animate-delay-400 {
+    animation-delay: 400ms;
+  }
+}
+
+/* 스크롤바 스타일 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-navy-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-navy-600 rounded-full hover:bg-navy-700;
+}
+
+/* Recharts 커스텀 스타일 */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(255, 255, 255, 0.05);
+}
+
+.recharts-tooltip-wrapper {
+  outline: none;
+}
